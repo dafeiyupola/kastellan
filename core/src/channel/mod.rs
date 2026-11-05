@@ -6,8 +6,9 @@
 //! Security model (three separable layers — see the spec + `docs/threat-model.md`
 //! "Communication channel"):
 //!   1. **Peer authentication** ([`auth`]) — fail-closed: an unrecognised peer's
-//!      message never becomes a task (dropped + audited). Pairing (TOTP/WebAuthn)
-//!      that makes a peer *recognised* is comms slice #3; this slice ships the seam.
+//!      message never becomes a task (dropped + audited). Pairing is
+//!      implemented in [`pairing`]: an operator-issued single-use code,
+//!      compared by SHA-256 and consumed atomically, binds `(channel, peer)`.
 //!   2. **Untrusted-input screening** ([`ingest`]) — every inbound body runs
 //!      through `cassandra::injection_guard` exactly like worker output. A channel
 //!      peer is no more trusted than a fetched web page.

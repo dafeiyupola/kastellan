@@ -1,8 +1,10 @@
 //! Observation-phase support for CASSANDRA rule iteration.
 //!
 //! The agent's `ConstitutionalGuard` and `DeterministicPolicy` reviewer
-//! stages ship as stubs that always `Approve` (see
-//! `core::cassandra::review`). The CASSANDRA design plan §9 and HANDOVER
+//! stages are wired for real (see `core::cassandra::review`): Stage −1
+//! screens the instruction for principle violations and Stage 0 enforces
+//! the data-classification invariants. Only `NoopReviewStage` always
+//! `Approve`s, and that one is a test seam. The CASSANDRA design plan §9 and HANDOVER
 //! both prescribe the same approach to designing real rule sets:
 //! **observe** — run varied prompts through the live agent, capture what
 //! the planner produces, and iterate candidate rules against that frozen

@@ -3,11 +3,12 @@
 //! pre-spawn position. Also screens worker outputs returning through
 //! the same chokepoint — see `injection_guard`.
 //!
-//! In the scope of this work the stages are stubs (always Approve)
-//! so the agent loop's baseline performance can be measured before
-//! real review overhead is added. The eventual real implementations
-//! replace `ConstitutionalGuard` and `DeterministicPolicy` in place;
-//! the trait, types, and `ChainReviewStage` are stable.
+//! Both stages are wired for real. Stage −1 (`ConstitutionalGuard`)
+//! screens the instruction for principle violations and can return
+//! `ConstitutionalBlock`; Stage 0 (`DeterministicPolicy`) enforces the
+//! data-classification invariants and can `Block`. The stage that always
+//! approves is `NoopReviewStage`, which exists only as a test seam. The
+//! optional guard-model tier can escalate a verdict further.
 //!
 //! See `docs/cassandra_design_plan.md` for the full design and
 //! `docs/superpowers/specs/2026-05-10-scheduler-design.md` §6.1 for
